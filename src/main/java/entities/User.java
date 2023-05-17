@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class User {
 	private Document document;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OrderBy("title DESC")
 	private Set<BlogPost> blogPosts;
 
 	public User(String firstName, String lastName, int age, String country) {
