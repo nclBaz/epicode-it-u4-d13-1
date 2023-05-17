@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import dao.BlogsDAO;
 import dao.DocumentsDAO;
 import dao.UsersDAO;
+import entities.BlogPost;
 import entities.Document;
 import entities.User;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ public class Application {
 		EntityManager em = emf.createEntityManager();
 		UsersDAO ud = new UsersDAO(em);
 		DocumentsDAO dd = new DocumentsDAO(em);
+		BlogsDAO bd = new BlogsDAO(em);
 
 		// ************************* 1 to 1 **********************
 		Document aldoDoc = new Document(LocalDate.now(), "saodijoj2", "IT");
@@ -33,6 +36,15 @@ public class Application {
 			log.info(found.toString());
 		}
 
+		// ********************** 1 to Many ***********************
+		if (found != null) {
+			BlogPost java = new BlogPost("JPA", "bellissimo", found);
+			// bd.saveBlog(java);
+		}
+
+		BlogPost java2 = bd.findById("4140d0e4-32c3-4198-9494-96f831f647ec");
+		log.info(java2.toString());
+		log.info(java2.getUser().toString());
 
 		em.close();
 		emf.close();
